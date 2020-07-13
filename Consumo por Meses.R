@@ -24,7 +24,8 @@ for(y in anios){
   
   for(m in meses){
     datosMes <- subset(datosAnio, month(datosAnio$date) == m)
-    print(quickplot(datosMes$date ,datosMes$x , geom = c("line", "smooth"), xlab = "", ylab = "Consumo (w/h)", ylim = c(-10000,35000), main = paste("Año", y, sep = " ")) +  geom_point())
+    print(quickplot(datosMes$date ,datosMes$x , geom = c("line"), xlab = "", ylab = "Consumo (w/h)", ylim = c(-10000,35000), main = paste("Año", y, sep = " ")) +  
+            geom_point()+ geom_smooth(level = 0.95))
   }
 }
 dev.off()
