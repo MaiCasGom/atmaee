@@ -1,6 +1,8 @@
 setwd("~/atmaee")
 library(lubridate)
 library(ggplot2)
+library(zoo)
+
 DatosVivienda= read.csv("household_power_consumption.txt", comment.char = "@", sep = ";")
 colnames(DatosVivienda) = c("Fecha","Hora", "PotenciaActivaGlobal (kW)",
                             "PotenciaReactivaGlobal (kW)", "Voltaje (V)",
@@ -33,7 +35,7 @@ for(m in meses){
   nn <- ncol(matrizDatosMes)
   layout(matrix(c(1,2),nrow=1), width=c(3,1)) 
   par(mar=c(4,3,3,0)) #No margin on the right side
-  print(matplot(matrizDatosMes, type="l", lty = "solid", col = 1:6, xlab=month.abb[m], ylab="Consumo (w/h)", ylim = c(0,35000)))
+  print(matplot(na.approx(matrizDatosMes), type="l", lty = "solid", col = 1:6, xlab=month.abb[m], ylab="Consumo (w/h)", ylim = c(0,35000)))
   print(plot(c(0,1),type="n", axes=F, xlab="", ylab=""))
   print(legend("left", colnames(matrizDatosMes),col=seq_len(nn),cex=0.8,fill=seq_len(nn)))
 }
