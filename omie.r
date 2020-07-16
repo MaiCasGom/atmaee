@@ -11,8 +11,11 @@ DatosOmie <- lapply(files, function(x) {
 
 DatosOmie <- do.call(rbind, DatosOmie)
 
-colnames(DatosOmie) = c("Anio","Mes", "Dia", "PrecioES")
+colnames(DatosOmie) = c("Anio","Mes", "Dia", "Hora", "PrecioES")
+DatosOmie$Hora <- sprintf("%02d", as.numeric(DatosOmie$Hora))
+DatosOmie$Hora[DatosOmie$Hora=="24"] <- "00"
 
+DatosOmie <- unique( DatosOmie[ , 1:5 ] )
 
 ## Cargando datos consumo ##
 
@@ -23,21 +26,31 @@ colnames(DatosVivienda) = c("Fecha","Hora", "PotenciaActivaGlobal (kW)",
 
 DatosVivienda <- na.omit(DatosVivienda)
 # Sumamos el consumo de cocina, lavanderia y aires acondicionados y si falta algún dato no lo tenemos en cuenta.
-Suma_Total <- rowSums(DatosVivienda[, c(7, 8, 9)], na.rm = TRUE)
+SumaTotal <- rowSums(DatosVivienda[, c(7, 8, 9)])
+DatosVivienda$Fecha=as.Date(DatosVivienda$Fecha, format = "%d/%m/%Y")
+DatosVivienda$Hora=substr(DatosVivienda$Hora, 1,2)
 
-DatosViviendaAgrupados <- data.frame(date=DatosVivienda$Fecha, consumo_total=Suma_Total)
+DatosViviendaAgrupados <- data.frame(fecha=DatosVivienda$Fecha, hora=DatosVivienda$Hora, consumo_total=SumaTotal)
 
-SumaTotalPorFecha <- aggregate(DatosViviendaAgrupados$consumo_total, list(date=DatosViviendaAgrupados$date), FUN=sum)
-SumaTotalPorFecha$date=as.Date(SumaTotalPorFecha$date, format = "%d/%m/%Y")
+SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$consumo_total, list(fecha=DatosViviendaAgrupados$fecha,hora=DatosViviendaAgrupados$hora ), FUN=sum)
 
-for(i in 1:nrow(SumaTotalPorFecha)) {
-  dia <- as.integer(format(as.Date(SumaTotalPorFecha[i, "date"],format="%Y-%m-%d"), format = "%d"))
-  mes <- as.integer(format(as.Date(SumaTotalPorFecha[i, "date"],format="%Y-%m-%d"), format = "%m"))
-  anio <- as.integer(format(as.Date(SumaTotalPorFecha[i, "date"],format="%Y-%m-%d"), format = "%Y"))
-  for(j in 1:nrow(DatosOmie)) {
-    if (DatosOmie[j, "Anio"] == anio & DatosOmie[j, "Mes"] == mes & DatosOmie[j, "Dia"] == dia) {
-      SumaTotalPorFecha[i, "Precio"] <- DatosOmie[j, "PrecioES"]
-      SumaTotalPorFecha[i, "Gasto"] <- SumaTotalPorFecha[i, "x"] * DatosOmie[j, "PrecioES"] / 1000
-    }
+for(i in 1:nrow(SumaTotalPorFechaHora)) {
+  hora <- SumaTotalPorFechaHora[i, "hora"]
+  dia <- as.integer(format(as.Date(SumaTotalPorFechaHora[i, "fecha"],format="%Y-%m-%d"), format = "%d"))
+  mes <- as.integer(format(as.Date(SumaTotalPorFechaHora[i, "fecha"],format="%Y-%m-%d"), format = "%m"))
+  anio <- as.integer(format(as.Date(SumaTotalPorFechaHora[i, "fecha"],format="%Y-%m-%d"), format = "%Y"))
+  
+  precio <- DatosOmie[DatosOmie$Anio == anio & 
+                    DatosOmie$Mes == mes & 
+                    DatosOmie$Dia == dia & 
+                    DatosOmie$Hora == hora, "PrecioES"]
+
+  if (length(precio) == 0) {
+    precio <- NA
   }
+
+  SumaTotalPorFechaHora[i, "Precio"] <- precio
+  SumaTotalPorFechaHora[i, "Gasto"] <- SumaTotalPorFechaHora[i, "x"] * precio / 1000000
+  
 }
+

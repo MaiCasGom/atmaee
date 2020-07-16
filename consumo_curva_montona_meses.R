@@ -19,10 +19,18 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$consumo_total, list(fe
 SumaTotalPorFechaHora$tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$fecha, SumaTotalPorFechaHora$hora), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$fecha)))
-pdf("graficas/curva_monotona_de_carga.pdf",width=6,height=4,paper='special')
+pdf("graficas/curva_monotona_de_carga_por_meses.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$fecha) == y) 
-  datosAnio <- datosAnio[order(-datosAnio$x),]
-  print(quickplot(1:nrow(datosAnio) ,datosAnio$x , geom = c("line"), xlab = "Horas", ylab = "Consumo (Wh)", ylim = c(0,3500), main = paste("Año", y, sep = " ")))
+  #datosAnio <- datosAnio[order(-datosAnio$x),]
+  meses <- sort(unique(month(datosAnio$fecha)))
+  
+  for(m in meses){
+    datosMes <- subset(datosAnio, month(datosAnio$fecha) == m)
+    datosMes <- datosMes[order(-datosMes$x),]
+    
+    print(quickplot(1:nrow(datosMes) ,datosMes$x , geom = c("line"), xlab = "Horas (h)", ylab = "Consumo (Wh)", ylim = c(0,5000), main = paste(month.abb[m], y, sep = " ")))
+    
+  }
 }
 dev.off()
