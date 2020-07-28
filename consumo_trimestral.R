@@ -1,35 +1,17 @@
-setwd("~/atmaee")
-library(lubridate)
-library(ggplot2)
-library(zoo)
-DatosVivienda= read.csv("household_power_consumption.txt", comment.char = "@", sep = ";")
-colnames(DatosVivienda) = c("Fecha","Hora", "PotenciaActivaGlobal (kW)",
-                            "PotenciaReactivaGlobal (kW)", "Voltaje (V)",
-                            "IntensidadGlobal (A)","ConsumoCocina (Wh)","ConsumoLavanderia (Wh)","ConsumoAireyCalentador (Wh)")
-
-DatosVivienda <- na.omit(DatosVivienda)
-# Sumamos el consumo de cocina, lavanderia y aires acondicionados y si falta algún dato no lo tenemos en cuenta.
-Suma_Total <- rowSums(DatosVivienda[, c(7, 8, 9)])
-
-DatosViviendaAgrupados <- data.frame(date=DatosVivienda$Fecha, consumo_total=Suma_Total)
-
-SumaTotalPorFecha <- aggregate(DatosViviendaAgrupados$consumo_total, list(date=DatosViviendaAgrupados$date), FUN=sum)
-SumaTotalPorFecha$date=as.Date(SumaTotalPorFecha$date, format = "%d/%m/%Y")
-
-anios <- sort(unique(year(SumaTotalPorFecha$date)))
-meses <- sort(unique(month(SumaTotalPorFecha$date)))
+anios <- sort(unique(year(DatosViviendaAgrupadosPorFecha$Fecha)))
+meses <- sort(unique(month(DatosViviendaAgrupadosPorFecha$Fecha)))
 
 pdf("graficas/consumo_trimestre.pdf",width=6,height=4,paper='special')
 for(m in c(1,4,7,10)){
-  datosTrimestre <- subset(SumaTotalPorFecha, (month(SumaTotalPorFecha$date) == m | month(SumaTotalPorFecha$date) == m+1 |  month(SumaTotalPorFecha$date) == m+2 ))
+  datosTrimestre <- subset(DatosViviendaAgrupadosPorFecha, (month(DatosViviendaAgrupadosPorFecha$Fecha) == m | month(DatosViviendaAgrupadosPorFecha$Fecha) == m+1 |  month(DatosViviendaAgrupadosPorFecha$Fecha) == m+2 ))
   matrizDatosTrimestre <- matrix(nrow=93, ncol=length(anios))
   colnames(matrizDatosTrimestre) <- c(anios)
   #matrizDatosTrimestre[] <- NA
   for(row in 1:nrow(datosTrimestre)) {
-    dia <- strtoi(format(as.Date(datosTrimestre[row, "date"],format="%Y-%m-%d"), format = "%d"),base = 10L)
-    mes <- strtoi(format(as.Date(datosTrimestre[row, "date"],format="%Y-%m-%d"), format = "%m"),base = 10L)
+    dia <- strtoi(format(as.Date(datosTrimestre[row, "Fecha"],format="%Y-%m-%d"), format = "%d"),base = 10L)
+    mes <- strtoi(format(as.Date(datosTrimestre[row, "Fecha"],format="%Y-%m-%d"), format = "%m"),base = 10L)
     dia <- dia + (((mes - 1) %% 3) * 31)
-    anio <- format(as.Date(datosTrimestre[row, "date"],format="%Y-%m-%d"), format = "%Y")
+    anio <- format(as.Date(datosTrimestre[row, "Fecha"],format="%Y-%m-%d"), format = "%Y")
     matrizDatosTrimestre[dia, anio] <- datosTrimestre[row, "x"]
   }
   nn <- ncol(matrizDatosTrimestre)
