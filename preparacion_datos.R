@@ -1,3 +1,4 @@
+library(ggplot2)
 setwd("~/atmaee")
 DatosVivienda = read.csv("household_power_consumption.txt", comment.char = "@", sep = ";", na.strings=c("?","NA"))
 DatosVivienda <- na.omit(DatosVivienda)
