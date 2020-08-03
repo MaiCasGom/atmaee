@@ -3,7 +3,7 @@ library(lubridate)
 
 ### CONSUMO TOTAL ###
 
-pdf("graficas/consumo_total/consumo_total_dias_semana.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_total/consumo_total_con_IQR_dias_semana.pdf",width=6,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -21,7 +21,7 @@ for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domin
         print(lines(datosDia$Hora, datosDia$ConsumoTotal,type = 'l'))
       }
     }
-    mediasAnio <- aggregate(datosAnio$ConsumoTotal, list(Hora=datosAnio$Hora ), FUN=mean)
+    mediasAnio <- aggregate(datosAnio$ConsumoTotal, list(Hora=datosAnio$Hora ), FUN=IQR)
     print(lines(mediasAnio$Hora, mediasAnio$x,type = 'l', col="blue", lwd=3))
   }
 }
@@ -32,7 +32,7 @@ dev.off()
 
 ### CONSUMO COCINA ###
 
-pdf("graficas/consumo_cocina/consumo_cocina_dias_semana.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_cocina/consumo_cocina_con_IQR_dias_semana.pdf",width=6,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -50,7 +50,7 @@ for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domin
         print(lines(datosDia$Hora, datosDia$ConsumoCocina,type = 'l'))
       }
     }
-    mediasAnio <- aggregate(datosAnio$ConsumoCocina, list(Hora=datosAnio$Hora ), FUN=mean)
+    mediasAnio <- aggregate(datosAnio$ConsumoCocina, list(Hora=datosAnio$Hora ), FUN=IQR)
     print(lines(mediasAnio$Hora, mediasAnio$x,type = 'l', col="blue", lwd=3))
   }
 }
@@ -62,7 +62,7 @@ dev.off()
 ### CONSUMO AIRE Y CALEFACCION ###
 
 
-pdf("graficas/consumo_aire_calefaccion/consumo_aireycalefaccion_dias_semana.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_aire_calefaccion/consumo_aireycalefaccion_con_IQR_dias_semana.pdf",width=6,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -80,7 +80,7 @@ for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domin
         print(lines(datosDia$Hora, datosDia$ConsumoAireyCalefaccion,type = 'l'))
       }
     }
-    mediasAnio <- aggregate(datosAnio$ConsumoAireyCalefaccion, list(Hora=datosAnio$Hora ), FUN=mean)
+    mediasAnio <- aggregate(datosAnio$ConsumoAireyCalefaccion, list(Hora=datosAnio$Hora ), FUN=IQR)
     print(lines(mediasAnio$Hora, mediasAnio$x,type = 'l', col="blue", lwd=3))
   }
 }
@@ -93,7 +93,7 @@ dev.off()
 
 
 
-pdf("graficas/consumo_lavanderia/consumo_lavanderia_dias_semana.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_lavanderia/consumo_lavanderia_con_IQR_dias_semana.pdf",width=6,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -111,7 +111,7 @@ for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domin
         print(lines(datosDia$Hora, datosDia$ConsumoLavanderia,type = 'l'))
       }
     }
-    mediasAnio <- aggregate(datosAnio$ConsumoLavanderia, list(Hora=datosAnio$Hora ), FUN=mean)
+    mediasAnio <- aggregate(datosAnio$ConsumoLavanderia, list(Hora=datosAnio$Hora ), FUN=IQR)
     print(lines(mediasAnio$Hora, mediasAnio$x,type = 'l', col="blue", lwd=3))
   }
 }
