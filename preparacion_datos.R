@@ -1,4 +1,6 @@
 library(ggplot2)
+library(lubridate)
+
 setwd("~/atmaee")
 DatosVivienda = read.csv("household_power_consumption.txt", comment.char = "@", sep = ";", na.strings=c("?","NA"))
 DatosVivienda <- na.omit(DatosVivienda)
@@ -53,11 +55,22 @@ for(i in 1:nrow(DatosViviendaAgrupados)) {
     precio <- NA
   }
   
-  DatosViviendaAgrupados[i, "Precio"] <- precio
-  DatosViviendaAgrupados[i, "GastoCocina"] <- DatosViviendaAgrupados[i, "ConsumoCocina"] * precio / 1000000
-  DatosViviendaAgrupados[i, "GastoLavanderia"] <- DatosViviendaAgrupados[i, "ConsumoLavanderia"] * precio / 1000000
-  DatosViviendaAgrupados[i, "GastoAireyCalefaccion"] <- DatosViviendaAgrupados[i, "ConsumoAireyCalefaccion"] * precio / 1000000
-  DatosViviendaAgrupados[i, "GastoTotal"] <- DatosViviendaAgrupados[i, "ConsumoTotal"] * precio / 1000000
+  if (anio < 2010) {
+    precio <- precio * 10
+  }
+  
+  if (anio != 2006 ){
+    DatosViviendaAgrupados[i, "Precio"] <- precio
+    DatosViviendaAgrupados[i, "GastoCocina"] <- DatosViviendaAgrupados[i, "ConsumoCocina"] * precio / 1000000
+    DatosViviendaAgrupados[i, "GastoLavanderia"] <- DatosViviendaAgrupados[i, "ConsumoLavanderia"] * precio / 1000000
+    DatosViviendaAgrupados[i, "GastoAireyCalefaccion"] <- DatosViviendaAgrupados[i, "ConsumoAireyCalefaccion"] * precio / 1000000
+    DatosViviendaAgrupados[i, "GastoTotal"] <- DatosViviendaAgrupados[i, "ConsumoTotal"] * precio / 1000000
+  }
 }
 
+DatosViviendaAgrupados <- na.omit(DatosViviendaAgrupados)
+
 DatosViviendaAgrupadosPorFecha <- aggregate(DatosViviendaAgrupados$ConsumoTotal, list(Fecha=DatosViviendaAgrupados$Fecha), FUN=sum)
+DatosCocinaAgrupadosPorFecha <- aggregate(DatosViviendaAgrupados$ConsumoCocina, list(Fecha=DatosViviendaAgrupados$Fecha), FUN=sum)
+DatosLavanderiaAgrupadosPorFecha <- aggregate(DatosViviendaAgrupados$ConsumoLavanderia, list(Fecha=DatosViviendaAgrupados$Fecha), FUN=sum)
+DatosAireCalefaccionAgrupadosPorFecha <- aggregate(DatosViviendaAgrupados$ConsumoAireyCalefaccion, list(Fecha=DatosViviendaAgrupados$Fecha), FUN=sum)

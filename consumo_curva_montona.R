@@ -36,7 +36,7 @@ pdf("graficas/consumo_aire_calefaccion//curva_monotona_de_carga_aireycalefaccion
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   datosAnio <- datosAnio[order(-datosAnio$x),]
-  print(quickplot(1:nrow(datosAnio) ,datosAnio$x , geom = c("line"), xlab = "Horas", ylab = "Consumo (Wh)", ylim = c(0,3500), main = paste("Año", y, sep = " ")))
+  print(quickplot(1:nrow(datosAnio) ,datosAnio$x , geom = c("line"), xlab = "Horas", ylab = "Consumo (Wh)", ylim = c(0,1500), main = paste("Año", y, sep = " ")))
 }
 dev.off()
 
