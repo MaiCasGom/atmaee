@@ -3,7 +3,7 @@ library(lubridate)
 
 ## TOTAL ##
 
-pdf("graficas/consumo_total/precio_consumo_dias_semana.pdf",width=7,height=4,paper='special')
+pdf("graficas/precio_consumo_dias_semana/precio_consumo_dias_semana.pdf",width=7,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]

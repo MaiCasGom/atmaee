@@ -1,7 +1,7 @@
 library(zoo)
 library(lubridate)
 
-pdf("graficas/consumo_total/precio_gasto_dias_semana.pdf",width=7,height=4,paper='special')
+pdf("graficas/precio_gasto_dias_semana/precio_gasto_dias_semana.pdf",width=7,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
