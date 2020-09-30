@@ -4,7 +4,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoTotal, list(Fec
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, SumaTotalPorFechaHora$Hora), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_total/curva_monotona_de_carga.pdf",width=6,height=4,paper='special')
+pdf("graficas/curva_monotona_de_carga/consumo_total.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   datosAnio <- datosAnio[order(-datosAnio$x),]
@@ -18,7 +18,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoCocina, list(Fe
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, SumaTotalPorFechaHora$Hora), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_cocina/curva_monotona_de_carga_cocina.pdf",width=6,height=4,paper='special')
+pdf("graficas/curva_monotona_de_carga/consumo_cocina.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   datosAnio <- datosAnio[order(-datosAnio$x),]
@@ -32,7 +32,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoAireyCalefaccio
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, SumaTotalPorFechaHora$Hora), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_aire_calefaccion//curva_monotona_de_carga_aireycalefaccion.pdf",width=6,height=4,paper='special')
+pdf("graficas/curva_monotona_de_carga/consumo_aire_calefaccion.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   datosAnio <- datosAnio[order(-datosAnio$x),]
@@ -47,7 +47,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoLavanderia, lis
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, SumaTotalPorFechaHora$Hora), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_lavanderia//curva_monotona_de_carga_lavanderia.pdf",width=6,height=4,paper='special')
+pdf("graficas/curva_monotona_de_carga/consumo_lavanderia.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   datosAnio <- datosAnio[order(-datosAnio$x),]

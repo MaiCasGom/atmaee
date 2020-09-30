@@ -5,7 +5,7 @@ library(zoo)
 anios <- sort(unique(year(DatosViviendaAgrupadosPorFecha$Fecha)))
 meses <- sort(unique(month(DatosViviendaAgrupadosPorFecha$Fecha)))
 
-pdf("graficas/consumo_total/consumo_mes_a_mes.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mes_a_mes/consumo_total.pdf",width=6,height=4,paper='special')
 for(m in meses){
   datosMes <- subset(DatosViviendaAgrupadosPorFecha, month(DatosViviendaAgrupadosPorFecha$Fecha) == m)
   matrizDatosMes <- matrix(nrow=31, ncol=length(anios))
@@ -30,7 +30,7 @@ dev.off()
 anios <- sort(unique(year(DatosAireCalefaccionAgrupadosPorFecha$Fecha)))
 meses <- sort(unique(month(DatosAireCalefaccionAgrupadosPorFecha$Fecha)))
 
-pdf("graficas/consumo_aire_calefaccion/consumo_mes_a_mes.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mes_a_mes/consumo_aire_calefaccion.pdf",width=6,height=4,paper='special')
 for(m in meses){
   datosMes <- subset(DatosAireCalefaccionAgrupadosPorFecha, month(DatosAireCalefaccionAgrupadosPorFecha$Fecha) == m)
   matrizDatosMes <- matrix(nrow=31, ncol=length(anios))
@@ -55,7 +55,7 @@ z
 anios <- sort(unique(year(DatosCocinaAgrupadosPorFecha$Fecha)))
 meses <- sort(unique(month(DatosCocinaAgrupadosPorFecha$Fecha)))
 
-pdf("graficas/consumo_cocina/consumo_mes_a_mes.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mes_a_mes/consumo_cocina.pdf",width=6,height=4,paper='special')
 for(m in meses){
   datosMes <- subset(DatosCocinaAgrupadosPorFecha, month(DatosCocinaAgrupadosPorFecha$Fecha) == m)
   matrizDatosMes <- matrix(nrow=31, ncol=length(anios))
@@ -80,7 +80,7 @@ dev.off()
 anios <- sort(unique(year(DatosLavanderiaAgrupadosPorFecha$Fecha)))
 meses <- sort(unique(month(DatosLavanderiaAgrupadosPorFecha$Fecha)))
 
-pdf("graficas/consumo_lavanderia/consumo_mes_a_mes.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mes_a_mes/consumo_lavanderia.pdf",width=6,height=4,paper='special')
 for(m in meses){
   datosMes <- subset(DatosLavanderiaAgrupadosPorFecha, month(DatosLavanderiaAgrupadosPorFecha$Fecha) == m)
   matrizDatosMes <- matrix(nrow=31, ncol=length(anios))

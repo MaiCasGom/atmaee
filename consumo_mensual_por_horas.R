@@ -4,7 +4,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoTotal, list(Fec
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, paste(SumaTotalPorFechaHora$Hora, ":00:00", sep = "")), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_total/consumo_mensual_por_horas.pdf",width=6,height=4,paper='special')
+  pdf("graficas/consumo_mensual_por_horas/consumo_total.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   meses <- sort(unique(month(datosAnio$Fecha)))
@@ -23,7 +23,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoAireyCalefaccio
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, paste(SumaTotalPorFechaHora$Hora, ":00:00", sep = "")), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_aire_calefaccion/consumo_mensual_por_horas.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mensual_por_horas/consumo_aire_calefaccion.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   meses <- sort(unique(month(datosAnio$Fecha)))
@@ -42,7 +42,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoCocina, list(Fe
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, paste(SumaTotalPorFechaHora$Hora, ":00:00", sep = "")), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_cocina/consumo_mensual_por_horas.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mensual_por_horas/consumo_cocina.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   meses <- sort(unique(month(datosAnio$Fecha)))
@@ -61,7 +61,7 @@ SumaTotalPorFechaHora <- aggregate(DatosViviendaAgrupados$ConsumoLavanderia, lis
 SumaTotalPorFechaHora$Tiempo=as.POSIXct(paste(SumaTotalPorFechaHora$Fecha, paste(SumaTotalPorFechaHora$Hora, ":00:00", sep = "")), format="%Y-%m-%d %H:%M:%S")
 
 anios <- sort(unique(year(SumaTotalPorFechaHora$Fecha)))
-pdf("graficas/consumo_lavanderia/consumo_mensual_por_horas.pdf",width=6,height=4,paper='special')
+pdf("graficas/consumo_mensual_por_horas/consumo_lavanderia.pdf",width=6,height=4,paper='special')
 for(y in anios){
   datosAnio <- subset(SumaTotalPorFechaHora, year(SumaTotalPorFechaHora$Fecha) == y) 
   meses <- sort(unique(month(datosAnio$Fecha)))

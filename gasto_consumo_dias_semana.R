@@ -3,7 +3,7 @@ library(lubridate)
 
 ## TOTAL ##
 
-pdf("graficas/consumo_total/gasto_consumo_dias_semana.pdf",width=7,height=4,paper='special')
+pdf("graficas/gasto_consumo_dias_semana/consumo_total.pdf",width=7,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -35,7 +35,7 @@ dev.off()
 
 ## AIRE Y CALEFACCION ##
 
-pdf("graficas/consumo_aire_calefaccion/gasto_consumo_dias_semana.pdf",width=7,height=4,paper='special')
+pdf("graficas/gasto_consumo_dias_semana/consumo_aire_calefaccion.pdf",width=7,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -68,7 +68,7 @@ dev.off()
 
 ## COCINA ##
 
-pdf("graficas/consumo_cocina/gasto_consumo_dias_semana.pdf",width=7,height=4,paper='special')
+pdf("graficas/gasto_consumo_dias_semana/consumo_cocina.pdf",width=7,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
@@ -101,7 +101,7 @@ dev.off()
 
 ## TOTAL ##
 
-pdf("graficas/consumo_lavanderia/gasto_consumo_dias_semana.pdf",width=7,height=4,paper='special')
+pdf("graficas/gasto_consumo_dias_semana/consumo_lavanderia.pdf",width=7,height=4,paper='special')
 
 for(w in c("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")){
   DatosDiaSemana <- DatosViviendaAgrupados[weekdays(as.Date(DatosViviendaAgrupados$Fecha)) == w, ]
