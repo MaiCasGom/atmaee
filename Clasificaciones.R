@@ -1,0 +1,142 @@
+library(cluster)
+library(dplyr)
+library(ggplot2)
+###### Funcion para normalizacion ####
+
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+######################################
+
+DatosViviendaAgrupados <- subset( DatosViviendaAgrupados, select = -Fecha )
+DatosViviendaAgrupados <- subset( DatosViviendaAgrupados, select = -Hora )
+
+#DatosViviendaAgrupadosNorm <- as.data.frame(lapply(DatosViviendaAgrupados[1:9], min_max_norm))
+
+DatosViviendaRangos <-apply(DatosViviendaAgrupados,2,range)
+
+DatosViviendaRangos <- mapply(DatosViviendaRangos, FUN=as.numeric)
+DatosViviendaRangos <- matrix(data=DatosViviendaRangos, ncol=9, nrow=2)
+colnames(DatosViviendaRangos) = c("ConsumoCocina","ConsumoLavanderia", "ConsumoAireyCalefaccion",
+                                  "ConsumoTotal", "Precio", "GastoCocina","GastoLavanderia","GastoAireyCalefaccion","GastoTotal")
+
+
+## Consumo cocina ##
+k = 3
+DatosConsumoCocina <- DatosViviendaAgrupados$ConsumoCocina
+dist_ponderada = dist(DatosConsumoCocina)
+km <- kmeans(DatosConsumoCocina, centers = k)
+
+DatosConsumoCocina <- data.frame(DatosConsumoCocina) %>% mutate(cluster = km$cluster)
+
+DatosConsumoCocina <- DatosConsumoCocina %>% mutate(cluster = as.factor(cluster),
+                          grupo   = as.factor(k))
+
+ggplot(data = DatosConsumoCocina, aes(x = DatosConsumoCocina, y = cluster, color=cluster)) +
+  geom_text(aes(label = cluster), size = 5) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+## Consumo lavandería ##
+k = 2
+DatosConsumoLavanderia <- DatosViviendaAgrupados$ConsumoLavanderia
+dist_ponderada = dist(DatosConsumoLavanderia)
+km <- kmeans(DatosConsumoLavanderia, centers = k)
+
+DatosConsumoLavanderia <- data.frame(DatosConsumoLavanderia) %>% mutate(cluster = km$cluster)
+
+DatosConsumoLavanderia <- DatosConsumoLavanderia %>% mutate(cluster = as.factor(cluster),
+                                                    grupo   = as.factor(k))
+
+ggplot(data = DatosConsumoLavanderia, aes(x = DatosConsumoLavanderia, y = cluster, color=cluster)) +
+  geom_text(aes(label = cluster), size = 5) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+## Consumo Aire y calefacción ##
+k = 2
+DatosConsumoAireyCalefaccion <- DatosViviendaAgrupados$ConsumoAireyCalefaccion
+dist_ponderada = dist(DatosConsumoAireyCalefaccion)
+km <- kmeans(DatosConsumoAireyCalefaccion, centers = k)
+
+DatosConsumoAireyCalefaccion <- data.frame(DatosConsumoAireyCalefaccion) %>% mutate(cluster = km$cluster)
+
+DatosConsumoAireyCalefaccion <- DatosConsumoAireyCalefaccion %>% mutate(cluster = as.factor(cluster),
+                                                            grupo   = as.factor(k))
+
+ggplot(data = DatosConsumoAireyCalefaccion, aes(x = DatosConsumoAireyCalefaccion, y = cluster, color=cluster)) +
+  geom_text(aes(label = cluster), size = 5) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+
+## Consumo Consumo Total ##
+k = 5
+DatosConsumoTotal <- DatosViviendaAgrupados$ConsumoTotal
+dist_ponderada = dist(DatosConsumoTotal)
+km <- kmeans(DatosConsumoTotal, centers = k)
+
+DatosConsumoTotal <- data.frame(DatosConsumoTotal) %>% mutate(cluster = km$cluster)
+
+DatosConsumoTotal <- DatosConsumoTotal %>% mutate(cluster = as.factor(cluster),
+                                                                        grupo   = as.factor(k))
+
+ggplot(data = DatosConsumoTotal, aes(x = DatosConsumoTotal, y = cluster, color=cluster)) +
+  geom_text(aes(label = cluster), size = 5) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+## Consumo Consumo General ##
+k = 2
+DatosConsumoGeneral <- subset( DatosViviendaAgrupados, select = c("ConsumoCocina", "ConsumoLavanderia", "ConsumoAireyCalefaccion") )
+km <- kmeans(DatosConsumoGeneral, centers = k)
+
+DatosConsumoGeneral <- data.frame(DatosConsumoGeneral) %>% mutate(cluster = km$cluster)
+
+DatosConsumoGeneral <- DatosConsumoGeneral %>% mutate(cluster = as.factor(cluster),
+                                                  grupo   = as.factor(k))
+
+#ggplot(data = DatosConsumoGeneral, aes(x = DatosConsumoGeneral, y = cluster)) +
+#  geom_text(aes(label = cluster), size = 5) +
+#  theme_bw() +
+#  theme(legend.position = "none")
+
+##### NO SE PUEDE REPRESENTAR PORQUE IMPLICA 3 VARIABLES, 3 DIMENSIONES #####
+
+## Precio ##
+k = 2
+DatosPrecio <- DatosViviendaAgrupados$Precio
+dist_ponderada = dist(DatosPrecio)
+km <- kmeans(DatosPrecio, centers = k)
+
+DatosPrecio <- data.frame(DatosPrecio) %>% mutate(cluster = km$cluster)
+
+DatosPrecio <- DatosPrecio %>% mutate(cluster = as.factor(cluster),
+                                                  grupo   = as.factor(k))
+
+ggplot(data = DatosPrecio, aes(x = DatosPrecio, y = cluster, color=cluster)) +
+  geom_text(aes(label = cluster), size = 5) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+
+
+k = 3
+DatosConsumoCocinaHoras <- subset( DatosViviendaAgrupados, select = c("ConsumoCocina", "Hora") )
+km <- kmeans(DatosConsumoCocinaHoras, centers = k)
+
+DatosConsumoCocinaHoras <- data.frame(DatosConsumoCocinaHoras) %>% mutate(cluster = km$cluster)
+
+DatosConsumoCocinaHoras <- DatosConsumoCocinaHoras %>% mutate(cluster = as.factor(cluster),
+                                                      grupo   = as.factor(k))
+
+ggplot(data = DatosConsumoCocinaHoras, aes(x = DatosConsumoCocinaHoras$ConsumoCocina, y = DatosConsumoCocinaHoras$Hora, color=cluster)) +
+  geom_text(aes(label = cluster), size = 5) +
+  theme_bw() +
+  theme(legend.position = "none")

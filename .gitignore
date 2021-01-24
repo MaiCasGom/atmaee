@@ -1,2 +1,5 @@
 household_power_consumption.txt
 *.zip
+.RData
+.Rhistory
+.RDatatmp
