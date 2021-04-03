@@ -1,5 +1,5 @@
 DatosViviendaAgrupados <- subset( DatosViviendaAgrupados, select = -Fecha )
-DatosViviendaAgrupados <- subset( DatosViviendaAgrupados, select = -Hora )
+#DatosViviendaAgrupados <- subset( DatosViviendaAgrupados, select = -Hora )
 
 DatosViviendaRangos <-apply(DatosViviendaAgrupados,2,range)
 
@@ -13,59 +13,59 @@ dist_ponderada = dist(DatosViviendaAgrupados)
 hGeneral = hclust(dist_ponderada, method = "ward.D2")
 
 ## Consumo Cocina ##
-DatosConsumoCocina <- DatosViviendaAgrupados$ConsumoCocina
+DatosConsumoCocina <- subset( DatosViviendaAgrupados, select = c(ConsumoCocina,Hora) )
 dist_ponderada = dist(DatosConsumoCocina)
 hCCocina = hclust(dist_ponderada, method = "ward.D2")
 
 ## Consumo Lavanderia ##
-DatosConsumoLavanderia <- DatosViviendaAgrupados$ConsumoLavanderia
+DatosConsumoLavanderia <- subset( DatosViviendaAgrupados, select = c(ConsumoLavanderia,Hora) )
 dist_ponderada = dist(DatosConsumoLavanderia)
 hCLavanderia = hclust(dist_ponderada, method = "ward.D2")
 
 ## Consumo Aire y Calefaccion ##
-DatosConsumoAireyCalefaccion <- DatosViviendaAgrupados$ConsumoAireyCalefaccion
+DatosConsumoAireyCalefaccion <- subset( DatosViviendaAgrupados, select = c(ConsumoAireyCalefaccion,Hora) )
 dist_ponderada = dist(DatosConsumoAireyCalefaccion)
 hCAireyCalefaccion = hclust(dist_ponderada, method = "ward.D2")
 
 ## Consumo Total ##
-DatosConsumoTotal<- DatosViviendaAgrupados$ConsumoTotal
+DatosConsumoTotal<- subset( DatosViviendaAgrupados, select = c(ConsumoTotal,Hora) )
 dist_ponderada = dist(DatosConsumoTotal)
 hCTotal = hclust(dist_ponderada, method = "ward.D2")
 
 ## Consumo Cocina + Lavanderia + Aire y Calefacción ##
-DatosConsumoCocinaLavanderiaAireCalefaccion <- subset( DatosViviendaAgrupados, select = c("ConsumoCocina", "ConsumoLavanderia", "ConsumoAireyCalefaccion") )
+DatosConsumoCocinaLavanderiaAireCalefaccion <- subset( DatosViviendaAgrupados, select = c("ConsumoCocina", "ConsumoLavanderia", "ConsumoAireyCalefaccion", "Hora") )
 dist_ponderada = dist(DatosConsumoCocinaLavanderiaAireCalefaccion)
 hCCocinaLavanderiaAireCalefaccion = hclust(dist_ponderada, method = "ward.D2")
 
 ## Precio ##
-DatosPrecio<- DatosViviendaAgrupados$Precio
+DatosPrecio<- subset( DatosViviendaAgrupados, select = c(Precio,Hora) )
 dist_ponderada = dist(DatosPrecio)
 hPrecio = hclust(dist_ponderada, method = "ward.D2")
 
 ## Gasto Cocina ##
-DatosGastoCocina<- DatosViviendaAgrupados$GastoCocina
-dist_ponderada = dist(DatosGastoCocina)
-hGCocina = hclust(dist_ponderada, method = "ward.D2")
-
-## Gasto Lavanderia ##
-DatosGastoLavanderia<- DatosViviendaAgrupados$GastoLavanderia
-dist_ponderada = dist(DatosGastoLavanderia)
-hGLavanderia = hclust(dist_ponderada, method = "ward.D2")
-
-## Gasto AireyCalefaccion ##
-DatosGastoAireyCalefaccion<- DatosViviendaAgrupados$GastoAireyCalefaccion
-dist_ponderada = dist(DatosGastoAireyCalefaccion)
-hGAireyCalefaccion = hclust(dist_ponderada, method = "ward.D2")
-
-## Gasto Total ##
-DatosGastoTotal<- DatosViviendaAgrupados$GastoTotal
-dist_ponderada = dist(DatosGastoTotal)
-hGTotal = hclust(dist_ponderada, method = "ward.D2")
-
-## Gasto Cocina + Lavanderia + Aire y Calefacción ##
-DatosGastooCocinaLavanderiaAireCalefaccion <- subset( DatosViviendaAgrupados, select = c("GastoCocina", "GastoLavanderia", "GastoAireyCalefaccion") )
-dist_ponderada = dist(DatosGastooCocinaLavanderiaAireCalefaccion)
-hGCocinaLavanderiaAireCalefaccion = hclust(dist_ponderada, method = "ward.D2")
+# DatosGastoCocina<- subset( DatosViviendaAgrupados, select = c(ConsumoLavanderia,Hora) )
+# dist_ponderada = dist(DatosGastoCocina)
+# hGCocina = hclust(dist_ponderada, method = "ward.D2")
+# 
+# ## Gasto Lavanderia ##
+# DatosGastoLavanderia<- DatosViviendaAgrupados$GastoLavanderia
+# dist_ponderada = dist(DatosGastoLavanderia)
+# hGLavanderia = hclust(dist_ponderada, method = "ward.D2")
+# 
+# ## Gasto AireyCalefaccion ##
+# DatosGastoAireyCalefaccion<- DatosViviendaAgrupados$GastoAireyCalefaccion
+# dist_ponderada = dist(DatosGastoAireyCalefaccion)
+# hGAireyCalefaccion = hclust(dist_ponderada, method = "ward.D2")
+# 
+# ## Gasto Total ##
+# DatosGastoTotal<- DatosViviendaAgrupados$GastoTotal
+# dist_ponderada = dist(DatosGastoTotal)
+# hGTotal = hclust(dist_ponderada, method = "ward.D2")
+# 
+# ## Gasto Cocina + Lavanderia + Aire y Calefacción ##
+# DatosGastooCocinaLavanderiaAireCalefaccion <- subset( DatosViviendaAgrupados, select = c("GastoCocina", "GastoLavanderia", "GastoAireyCalefaccion") )
+# dist_ponderada = dist(DatosGastooCocinaLavanderiaAireCalefaccion)
+# hGCocinaLavanderiaAireCalefaccion = hclust(dist_ponderada, method = "ward.D2")
 
 jpeg("graficas/dendrogramas/general.jpg",width=1080,height=720)
 plot(hGeneral, main="Dendrograma general")
