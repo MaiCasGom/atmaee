@@ -75,7 +75,7 @@ dist_ponderada = dist(DatosConsumoTotal)
 #jpeg("graficas/silhouette/consumo_total_kmedioides.jpg",width=1080,height=720)
 #plot(1, type="n", xlab="", ylab="", xlim=c(1, k+1), ylim=c(0.60, 0.85), main="Cálculo factor K - Consumo Total")
 #for (i in 2:k){ 
-  km <- pam(DatosConsumoTotal, 6)
+  km <- pam(DatosConsumoTotal, 7)
   ss <- silhouette(km$cluster, dist_ponderada)
   coeficiente_silhouette = mean(ss[, 3])
 #  points(i,mean(ss[, 3]))
@@ -84,12 +84,12 @@ dist_ponderada = dist(DatosConsumoTotal)
 #dev.off()
 
 ## Consumo Cocina + Lavanderia + Aire y Calefacción ##
-DatosConsumoCocinaLavanderiaAireCalefaccion <- subset( DatosViviendaAgrupadosNorm, select = c("ConsumoCocina", "ConsumoLavanderia", "ConsumoAireyCalefaccion") )
+DatosConsumoCocinaLavanderiaAireCalefaccion <- subset( DatosViviendaAgrupados, select = c("ConsumoCocina", "ConsumoLavanderia", "ConsumoAireyCalefaccion", "Hora") )
 dist_ponderada = dist(DatosConsumoCocinaLavanderiaAireCalefaccion)
 #jpeg("graficas/silhouette/consumo_general_kmedioides.jpg",width=1080,height=720)
 #plot(1, type="n", xlab="", ylab="", xlim=c(1, k+1), ylim=c(0.40, 0.80), main="Cálculo factor K - Consumo General")
 #for (i in 2:k){ 
-  km <- pam(DatosConsumoCocinaLavanderiaAireCalefaccion, 7)
+  km <- pam(DatosConsumoCocinaLavanderiaAireCalefaccion, 6)
   ss <- silhouette(km$cluster, dist_ponderada)
   coeficiente_silhouette = mean(ss[, 3])
 #  points(i,mean(ss[, 3]))
@@ -98,7 +98,7 @@ dist_ponderada = dist(DatosConsumoCocinaLavanderiaAireCalefaccion)
 #dev.off()
 
 ## Precio ##
-DatosPrecio<- DatosViviendaAgrupadosNorm$Precio
+DatosPrecio<- subset(DatosViviendaAgrupados, select = c(Precio,Hora) )
 dist_ponderada = dist(DatosPrecio)
 #jpeg("graficas/silhouette/precio_kmedioides.jpg",width=1080,height=720)
 #plot(1, type="n", xlab="", ylab="", xlim=c(1, k+1), ylim=c(0, 1), main="Cálculo factor K - Precio")
